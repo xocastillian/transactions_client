@@ -5,24 +5,24 @@ import { ColumnDef } from '@tanstack/react-table'
 export const columns: ColumnDef<Transaction>[] = [
 	{
 		accessorKey: 'dateTime',
-		header: 'Date',
+		header: 'Дата',
 		cell: info => formatDate(info.getValue() as string),
 	},
 	{
 		accessorKey: 'author',
-		header: 'Author',
+		header: 'Автор',
 	},
 	{
 		accessorKey: 'sum',
-		header: 'Amount',
+		header: 'Сумма',
 		cell: info => `${info.getValue()} ₸`,
 	},
 	{
 		accessorKey: 'categoryName',
-		header: 'Category',
+		header: 'Категория',
 	},
 	{
 		accessorKey: 'comment',
-		header: 'Comment',
+		header: 'Комментарий (не обязателен)',
 	},
 ]

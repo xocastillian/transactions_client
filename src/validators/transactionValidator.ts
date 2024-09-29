@@ -1,10 +1,15 @@
 import { z } from 'zod'
 
-export const transactionSchema = z.object({
-	author: z.string().min(1, 'Автор не должен быть пустым'),
-	sum: z.number().positive('Сумма должна быть положительным числом'),
+export const createTransactionSchema = z.object({
+	author: z.string().min(2, 'Автор обязателен'),
+	sum: z.number().min(100, 'Сумма должна быть больше 100'),
 	comment: z.string().optional(),
-	categoryId: z.number().int('ID категории должен быть целым числом').positive('ID категории должен быть положительным числом'),
+	categoryId: z
+		.number({
+			required_error: 'Необходимо выбрать категорию',
+		})
+		.int()
+		.positive('ID категории должен быть положительным числом'),
 })
 
-export type TransactionInput = z.infer<typeof transactionSchema>
+export type CreateTransactionInput = z.infer<typeof createTransactionSchema>

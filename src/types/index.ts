@@ -1,14 +1,21 @@
+export interface Category {
+	id: number
+	name: string
+}
+
 export interface Transaction {
 	id: number
 	dateTime: string
 	author: string
 	sum: number
-	comment: string | null
+	comment?: string
 	categoryId: number
-	categoryName?: string
+	category?: Category
 }
 
-export interface Category {
-	id: number
-	name: string
+export interface CreateTransaction {
+	author: string
+	sum: number
+	comment?: string
+	categoryId: number
 }

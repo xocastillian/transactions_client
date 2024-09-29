@@ -1,38 +1,26 @@
-import { getTransactions } from '@/api/transactions'
-import { Transaction } from '@/types'
 import { TransactionsTable } from '@/widgets/TransactionsTable/TransactionsTable'
-import React, { useEffect, useState } from 'react'
+import ModalTransaction from '../Modal/ModalTransaction'
+import { useGetTransactions } from '@/hooks/useGetTransactions'
 
 const TransactionsPage: React.FC = () => {
-	const [transactions, setTransactions] = useState<Transaction[]>([])
-	const [loading, setLoading] = useState<boolean>(true)
-	const [error, setError] = useState<string | null>(null)
-
-	useEffect(() => {
-		const fetchTransactions = async () => {
-			try {
-				const data = await getTransactions()
-				setTransactions(data)
-				setLoading(false)
-				console.log(data)
-			} catch {
-				setError('Failed to fetch transactions.')
-				setLoading(false)
-			}
-		}
-
-		fetchTransactions()
-	}, [])
+	const { transactions, loading, error, fetchTransactions } = useGetTransactions()
 
 	if (loading) {
-		return <div>Loading...</div>
+		return <div>Загрузка...</div>
 	}
 
 	if (error) {
 		return <div>{error}</div>
 	}
 
-	return <TransactionsTable data={transactions} />
+	return (
+		<>
+			<TransactionsTable data={transactions} />
+			<div className='flex justify-center mt-14'>
+				<ModalTransaction onSuccess={fetchTransactions} />
+			</div>
+		</>
+	)
 }
 
 export default TransactionsPage

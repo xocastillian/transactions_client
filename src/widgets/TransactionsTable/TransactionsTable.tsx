@@ -9,7 +9,10 @@ interface TransactionsTableProps {
 
 export function TransactionsTable({ data }: TransactionsTableProps) {
 	const table = useReactTable({
-		data,
+		data: data.map(transaction => ({
+			...transaction,
+			categoryName: transaction.category ? transaction.category.name : 'Не указана',
+		})),
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 	})
